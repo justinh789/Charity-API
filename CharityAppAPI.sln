@@ -3,13 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CharityApp.Web.Service", "CharityAppAPI\CharityApp.Web.Service.csproj", "{57E81342-3735-4F89-B19E-67497209A58F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CharityApp.Core", "CharityApp.Core\CharityApp.Core.csproj", "{F9D9036E-A999-41C0-A54F-C444E8A5BA50}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CharityApp.Data", "CharityApp.Data\CharityApp.Data.csproj", "{33617440-FD2B-4E9A-966D-8AECE5CDAE95}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F9D9036E-A999-41C0-A54F-C444E8A5BA50} = {F9D9036E-A999-41C0-A54F-C444E8A5BA50}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CharityApp.Services", "CharityApp.Services\CharityApp.Services.csproj", "{E48E6CAF-8917-43F3-907F-F3548B0F157E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{33617440-FD2B-4E9A-966D-8AECE5CDAE95} = {33617440-FD2B-4E9A-966D-8AECE5CDAE95}
+		{F9D9036E-A999-41C0-A54F-C444E8A5BA50} = {F9D9036E-A999-41C0-A54F-C444E8A5BA50}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CharityApp.Web.Service", "CharityApp.Web.Service\CharityApp.Web.Service.csproj", "{CEB4A9D9-7C0A-4BD2-97BA-65DF8C1C1EC0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{33617440-FD2B-4E9A-966D-8AECE5CDAE95} = {33617440-FD2B-4E9A-966D-8AECE5CDAE95}
+		{F9D9036E-A999-41C0-A54F-C444E8A5BA50} = {F9D9036E-A999-41C0-A54F-C444E8A5BA50}
+		{E48E6CAF-8917-43F3-907F-F3548B0F157E} = {E48E6CAF-8917-43F3-907F-F3548B0F157E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +29,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{57E81342-3735-4F89-B19E-67497209A58F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{57E81342-3735-4F89-B19E-67497209A58F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{57E81342-3735-4F89-B19E-67497209A58F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{57E81342-3735-4F89-B19E-67497209A58F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F9D9036E-A999-41C0-A54F-C444E8A5BA50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F9D9036E-A999-41C0-A54F-C444E8A5BA50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9D9036E-A999-41C0-A54F-C444E8A5BA50}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +41,10 @@ Global
 		{E48E6CAF-8917-43F3-907F-F3548B0F157E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E48E6CAF-8917-43F3-907F-F3548B0F157E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E48E6CAF-8917-43F3-907F-F3548B0F157E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEB4A9D9-7C0A-4BD2-97BA-65DF8C1C1EC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEB4A9D9-7C0A-4BD2-97BA-65DF8C1C1EC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEB4A9D9-7C0A-4BD2-97BA-65DF8C1C1EC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEB4A9D9-7C0A-4BD2-97BA-65DF8C1C1EC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
