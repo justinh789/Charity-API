@@ -4,4 +4,14 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CharityApp.Core\CharityApp.Core.csproj" />
+    <ProjectReference Include="..\CharityApp.Data\CharityApp.Data.csproj" />
+  </ItemGroup>
+
 </Project>

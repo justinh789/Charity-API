@@ -4,14 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using CharityApp.Data.Interfaces;
+using CharityApp.Data.Repos;
+using CharityApp.Data.UnitOfWork;
+using CharityApp.Services;
+using CharityApp.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using AspNetCore.RouteAnalyzer;
 
 namespace CharityApp.Web.Service
 {
@@ -38,12 +45,20 @@ namespace CharityApp.Web.Service
             // Add services to the collection.
             services.AddMvc();
 
+            services
+                .AddEntityFrameworkSqlServer()
+                .AddDbContext<DatabaseContext>(options => 
+                        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddRouteAnalyzer();
+
             // Create the container builder.
             var builder = new ContainerBuilder();
 
             // Register dependencies, populate the services from
             // the collection, and build the container.
-            //
+           
+
             // Note that Populate is basically a foreach to add things
             // into Autofac that are in the collection. If you register
             // things in Autofac BEFORE Populate then the stuff in the
@@ -52,6 +67,14 @@ namespace CharityApp.Web.Service
             // in the ServiceCollection. Mix and match as needed.
             builder.Populate(services);
             //builder.RegisterType<MyType>().As<IMyType>();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+            builder.RegisterType<DatabaseContext>().As<DatabaseContext>().InstancePerLifetimeScope();
+           
+
+            builder.RegisterType<CharityRepository>().As<ICharityRepository>().InstancePerLifetimeScope();
+
+            builder.RegisterType<CharityService>().As<ICharityService>().InstancePerLifetimeScope();
+            
             this.ApplicationContainer = builder.Build();
 
             // Create the IServiceProvider based on the container.
@@ -69,7 +92,13 @@ namespace CharityApp.Web.Service
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMvc();
+            //TODO: CONFUSED ! not used when adding ApiController attribute to class... ?
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller=Organizations}/{action=GetAll}");
+                routes.MapRouteAnalyzer("/routes"); //lists all Routes and associated controller/actions
+
+            });
 
             // As of Autofac.Extensions.DependencyInjection 4.3.0 the AutofacDependencyResolver
             // implements IDisposable and will be disposed - along with the application container -

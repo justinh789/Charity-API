@@ -72,6 +72,8 @@ namespace CharityApp.Core
 
         public DateTime? DueDate { get; set; }
 
+        public bool Active { get; set; }
+
         public decimal? Longitude { get; set; }
 
         public decimal? Latitude { get; set; }
