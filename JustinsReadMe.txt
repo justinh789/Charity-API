@@ -9,6 +9,7 @@ Focus:
 2. Unit of Work. 
 	All actions performed on DB must be grouped as one. 
 
+[WIP]
 3. SOLID Principles. 
 
 	Single Resp. 
