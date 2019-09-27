@@ -19,6 +19,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using AspNetCore.RouteAnalyzer;
+using Microsoft.OpenApi.Models;
 
 namespace CharityApp.Web.Service
 {
@@ -29,7 +30,7 @@ namespace CharityApp.Web.Service
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                //.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             this.Configuration = builder.Build();
         }
@@ -51,6 +52,11 @@ namespace CharityApp.Web.Service
                         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddRouteAnalyzer();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Charity API PoC", Version = "v1" });
+            });
 
             // Create the container builder.
             var builder = new ContainerBuilder();
@@ -98,6 +104,12 @@ namespace CharityApp.Web.Service
                 routes.MapRoute("default", "{controller=Organizations}/{action=GetAll}");
                 routes.MapRouteAnalyzer("/routes"); //lists all Routes and associated controller/actions
 
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Charity API PoC V1");
             });
 
             // As of Autofac.Extensions.DependencyInjection 4.3.0 the AutofacDependencyResolver

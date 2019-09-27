@@ -35,7 +35,7 @@ namespace CharityApp.Web.Service.Controllers
 
         //}
 
-        [HttpGet("Get/{Id}")]
+        [HttpGet("Get/{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Charity>> Get(int id)
         {

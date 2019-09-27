@@ -14,20 +14,28 @@ namespace CharityApp.Web.Service
     public class Program
     {
         public static void Main(string[] args)
-        {
-            var host = new WebHostBuilder()
-                 .UseKestrel()
-                 //.ConfigureServices(services => services.AddAutofac())
-                 .UseContentRoot(Directory.GetCurrentDirectory())
-                 .UseIISIntegration()
-                 .UseStartup<Startup>()
-                 .Build();
+        { 
+        //    var host = new WebHostBuilder()
+        //         .UseKestrel()
+        //         //.ConfigureServices(services => services.AddAutofac())
+        //         .UseContentRoot(Directory.GetCurrentDirectory())
+        //         .UseIISIntegration()
+        //         .UseStartup<Startup>()
+        //         .Build();
 
-            host.Run();
+
+        //    host.Run();
+
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .ConfigureKestrel((context, serverOptions) =>
+                {
+                    // Set properties and call methods on serverOptions
+
+                });
     }
 }
