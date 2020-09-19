@@ -34,6 +34,7 @@ namespace CharityApp.Web.Service
                 .UseStartup<Startup>()
                 .ConfigureKestrel((context, serverOptions) =>
                 {
+
                     // Set properties and call methods on serverOptions
 
                 });

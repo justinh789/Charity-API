@@ -14,7 +14,7 @@ namespace CharityApp.Web.Service.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class OrganizationsController : ControllerBase
+    public class OrganizationsController : Controller
     {
         private ICharityService _charityService;
 
@@ -35,16 +35,15 @@ namespace CharityApp.Web.Service.Controllers
 
         //}
 
-        [HttpGet("Get/{id}")]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Charity>> Get(int id)
         {
-            var charity = _charityService.GetById(id);
+            var charity = Task.FromResult(_charityService.GetById(id));
 
             if (charity == null)
                 return NotFound();
 
-            return charity;
+            return charity.Result;
         }
         #endregion
 

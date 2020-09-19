@@ -20,6 +20,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using AspNetCore.RouteAnalyzer;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace CharityApp.Web.Service
 {
@@ -30,7 +31,6 @@ namespace CharityApp.Web.Service
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                //.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             this.Configuration = builder.Build();
         }
@@ -44,7 +44,9 @@ namespace CharityApp.Web.Service
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // Add services to the collection.
-            services.AddMvc();
+
+
+            //services.AddMvc();
 
             services
                 .AddEntityFrameworkSqlServer()
@@ -52,11 +54,15 @@ namespace CharityApp.Web.Service
                         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddRouteAnalyzer();
+            services.AddControllers();
+         
+    
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Charity API PoC", Version = "v1" });
             });
+
 
             // Create the container builder.
             var builder = new ContainerBuilder();
@@ -76,7 +82,6 @@ namespace CharityApp.Web.Service
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
             builder.RegisterType<DatabaseContext>().As<DatabaseContext>().InstancePerLifetimeScope();
            
-
             builder.RegisterType<CharityRepository>().As<ICharityRepository>().InstancePerLifetimeScope();
 
             builder.RegisterType<CharityService>().As<ICharityService>().InstancePerLifetimeScope();
@@ -93,20 +98,27 @@ namespace CharityApp.Web.Service
         public void Configure(
           IApplicationBuilder app,
           ILoggerFactory loggerFactory,
-          IApplicationLifetime appLifetime)
+          IWebHostEnvironment webHostEnvironment)
         {
-            loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            
+            //loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
+            //loggerFactory.AddDebug();
 
-            //TODO: CONFUSED ! not used when adding ApiController attribute to class... ?
-            app.UseMvc(routes =>
+            app.UseRouting();
+            app.UseAuthentication();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute("default", "{controller=Organizations}/{action=GetAll}");
-                routes.MapRouteAnalyzer("/routes"); //lists all Routes and associated controller/actions
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Organizations}/{action=Get}/{id?}");
+            });
+
+            app.UseSwagger(c =>
+            {
 
             });
 
-            app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Charity API PoC V1");
