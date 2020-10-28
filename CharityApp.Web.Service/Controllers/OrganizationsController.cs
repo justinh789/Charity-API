@@ -38,12 +38,12 @@ namespace CharityApp.Web.Service.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Charity>> Get(int id)
         {
-            var charity = Task.FromResult(_charityService.GetById(id));
+            var charity = await Task.FromResult(_charityService.GetById(id));
 
             if (charity == null)
                 return NotFound();
 
-            return charity.Result;
+            return charity;
         }
         #endregion
 

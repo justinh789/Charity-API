@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.106
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CharityApp.Core", "CharityApp.Core\CharityApp.Core.csproj", "{F9D9036E-A999-41C0-A54F-C444E8A5BA50}"
 EndProject
@@ -26,6 +26,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8B4397FE-190D-4061-9FA4-B52197A56A00}"
 	ProjectSection(SolutionItems) = preProject
 		JustinsReadMe.txt = JustinsReadMe.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{C44E196C-D7E8-4ABA-834B-D09C6AD86F45}"
+	ProjectSection(SolutionItems) = preProject
+		Docker\.dockerignore = Docker\.dockerignore
+		Docker\Dockerfile = Docker\Dockerfile
 	EndProjectSection
 EndProject
 Global
