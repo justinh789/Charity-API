@@ -1,4 +1,7 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS base
+
+ENV ASPNETCORE_URLS http://+:5000
+
 WORKDIR /src
 COPY CharityAppAPI.sln ./
 COPY CharityApp.Core/*.csproj ./CharityApp.Core/
@@ -23,9 +26,8 @@ RUN dotnet build -c Release -o /app
 FROM base AS publish
 RUN dotnet publish -c Release -o /app
 
-EXPOSE 8000
-
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
+
 ENTRYPOINT ["dotnet", "CharityApp.Web.Service.dll"]
