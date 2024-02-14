@@ -8,9 +8,9 @@ namespace CharityApp.Services.Interfaces
 {
     public interface ICharityService
     {
-        Task<IEnumerable<Charity>> GetAll();
+        Task<IEnumerable<Organization>> GetAll();
         
-        Charity GetById(int id);
+        Organization GetById(Guid id);
         void SoftDelete(int id);
 
     }

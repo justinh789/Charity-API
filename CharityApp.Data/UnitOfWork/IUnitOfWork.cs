@@ -10,7 +10,7 @@ namespace CharityApp.Data.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<Charity> CharityRepository { get;  }
+        IRepository<Organization> CharityRepository { get;  }
 
         Task<int> SaveChanges();
 

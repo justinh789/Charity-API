@@ -9,8 +9,8 @@ namespace CharityApp.Data.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private ICharityRepository _charityRepository;
-        private DatabaseContext _dbContext;
+        private readonly ICharityRepository _charityRepository;
+        private readonly DatabaseContext _dbContext;
 
         public UnitOfWork(DatabaseContext databaseBaseContext, ICharityRepository charityRepository)
         {
@@ -18,10 +18,7 @@ namespace CharityApp.Data.UnitOfWork
             _dbContext = databaseBaseContext;
         }
 
-        public IRepository<Charity> CharityRepository
-        {
-            get{  return _charityRepository; }
-        }
+        public IRepository<Organization> CharityRepository => _charityRepository;
 
         public void Dispose()
         {

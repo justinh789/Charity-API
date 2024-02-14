@@ -10,23 +10,11 @@ using System.Threading.Tasks;
 
 namespace CharityApp.Data.Repos
 {
-    public class CharityRepository : Repository<Charity>, ICharityRepository
+    public class CharityRepository(DbContext db) : Repository<Organization>(db), ICharityRepository
     {
-
-        public CharityRepository(DatabaseContext _db) : base(_db)
-        {
-            
-        }
-
-        public IEnumerable<Charity> GetAllByCharityTypeId(int charityTypeId)//This is an example. Not expected to be implemented in this way. 
+        public IEnumerable<Organization> GetAllByCharityTypeId(int charityTypeId)//This is an example. Not expected to be implemented in this way. 
         {
             throw new NotImplementedException("This is an example. Not expected to be implemented in this way. ");
         }
-
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Charity>()
-        //        .ToTable("Charities", "dbo");
-        //}
     }
 }

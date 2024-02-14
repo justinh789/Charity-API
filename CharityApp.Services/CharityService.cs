@@ -10,19 +10,19 @@ namespace CharityApp.Services
 {
     public class CharityService : ICharityService
     {
-        private IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public CharityService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public Task<IEnumerable<Charity>> GetAll()
+        public Task<IEnumerable<Organization>> GetAll()
         {
             return _unitOfWork.CharityRepository.GetAll();
         }
 
-        public Charity GetById(int id)
+        public Organization GetById(Guid id)
         {
             return _unitOfWork.CharityRepository.Get(id);
         }
@@ -32,7 +32,7 @@ namespace CharityApp.Services
             var charityToDel = _unitOfWork.CharityRepository.Get(id);
 
             if (charityToDel == null)
-                throw new Exception("SoftDelete Error: Charity not found");
+                throw new Exception("SoftDelete Error: Organization not found");
 
             charityToDel.Active = false;
 

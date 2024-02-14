@@ -13,21 +13,20 @@ namespace CharityApp.Data.UnitOfWork
 
         }
 
-        public DbSet<Charity> Charity { get; set; }
+        public DbSet<Organization> Charity { get; set; }
      
 
-        //This now becomes one MASSIVE method... ???
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Charity>()
-                .ToTable("Charities", "dbo")
+            modelBuilder.Entity<Organization>()
+                .ToTable("organizations", "charity")
                 .HasKey(charity => charity.Id);
 
             //Property renaming...
-            modelBuilder.Entity<Charity>()
+         /*   modelBuilder.Entity<Organization>()
                 .Property(charityProp => charityProp.Email).HasColumnName("E-mail");
-            modelBuilder.Entity<Charity>()
-                .Property(charityProp => charityProp.Type_of_Deregistration).HasColumnName("Type_of_De-registration");
+            modelBuilder.Entity<Organization>()
+                .Property(charityProp => charityProp.Type_of_Deregistration).HasColumnName("Type_of_De-registration");*/
 
         }
 

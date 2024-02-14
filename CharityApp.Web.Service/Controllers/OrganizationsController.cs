@@ -29,14 +29,14 @@ namespace CharityApp.Web.Service.Controllers
 
         #region HttpGet
         //[HttpGet("Get")]
-        //public async Task<IEnumerable<Charity>> GetAll()
+        //public async Task<IEnumerable<Organization>> GetAll()
         //{
         //    return await _charityService.GetAll();
 
         //}
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Charity>> Get(int id)
+        public async Task<ActionResult<Organization>> Get(Guid id)
         {
             var charity = await Task.FromResult(_charityService.GetById(id));
 

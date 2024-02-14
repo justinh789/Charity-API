@@ -49,9 +49,9 @@ namespace CharityApp.Web.Service
             //services.AddMvc();
 
             services
-                .AddEntityFrameworkSqlServer()
+                //.AddEntityFrameworkNpgsql()
                 .AddDbContext<DatabaseContext>(options => 
-                        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                        options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddRouteAnalyzer();
             services.AddControllers();
@@ -78,9 +78,9 @@ namespace CharityApp.Web.Service
             // AFTER Populate those registrations can override things
             // in the ServiceCollection. Mix and match as needed.
             builder.Populate(services);
-            //builder.RegisterType<MyType>().As<IMyType>();
+            // builder.RegisterType<MyType>().As<IMyType>();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
-            builder.RegisterType<DatabaseContext>().As<DatabaseContext>().InstancePerLifetimeScope();
+            builder.RegisterType<DatabaseContext>().As<DbContext>().InstancePerLifetimeScope();
            
             builder.RegisterType<CharityRepository>().As<ICharityRepository>().InstancePerLifetimeScope();
 
@@ -111,7 +111,7 @@ namespace CharityApp.Web.Service
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Organizations}/{action=Get}/{id?}");
+                    pattern: "{controller=Organization}/{action=Get}/{id?}");
             });
 
             app.UseSwagger(c =>

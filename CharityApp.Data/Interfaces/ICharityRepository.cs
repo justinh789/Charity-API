@@ -6,8 +6,8 @@ using System.Text;
 
 namespace CharityApp.Data.Interfaces
 {
-    public interface ICharityRepository : IRepository<Charity>
+    public interface ICharityRepository : IRepository<Organization>
     {
-        IEnumerable<Charity> GetAllByCharityTypeId(int charityTypeId);//This is an example. Not expected to be implemented in this way. 
+        IEnumerable<Organization> GetAllByCharityTypeId(int charityTypeId);//This is an example. Not expected to be implemented in this way. 
     }
 }
