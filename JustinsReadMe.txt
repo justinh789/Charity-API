@@ -1,3 +1,10 @@
+Run:
+	Navigate to solution root dir
+	execute command: 
+		docker build -t sharing-hope-api .
+
+		docker run -d -p 5000:5000 sharing-hope-api
+
 Focus: 
 
 1. Loose coupling/ Seperation of Concerns
