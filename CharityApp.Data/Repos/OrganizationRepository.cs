@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CharityApp.Data.Repos
 {
-    public class CharityRepository(DbContext db) : Repository<Organization>(db), ICharityRepository
+    public class OrganizationRepository(DbContext db) : Repository<Organization>(db), IOrganizationRepository
     {
         public IEnumerable<Organization> GetAllByCharityTypeId(int charityTypeId)//This is an example. Not expected to be implemented in this way. 
         {

@@ -2,23 +2,35 @@
 using CharityApp.Data.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CharityApp.Core.Domain;
+using CharityApp.Data.Repos;
 
 namespace CharityApp.Data.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly ICharityRepository _charityRepository;
+        private readonly IOrganizationRepository _organizationRepository;
         private readonly DatabaseContext _dbContext;
+        private readonly ISubcategoryRepository _subcategoryRepository;
 
-        public UnitOfWork(DatabaseContext databaseBaseContext, ICharityRepository charityRepository)
+        public UnitOfWork(DatabaseContext databaseBaseContext, 
+            IOrganizationRepository organizationRepository, 
+            ICategoryRepository categoryRepository, 
+            ISubcategoryRepository subcategoryRepository)
         {
-            _charityRepository = charityRepository;
+            _organizationRepository = organizationRepository;
             _dbContext = databaseBaseContext;
+            CategoryRepository = categoryRepository;
+            _subcategoryRepository = subcategoryRepository;
         }
 
-        public IRepository<Organization> CharityRepository => _charityRepository;
+        public IRepository<Organization> OrganizationRepository => _organizationRepository;
+        public IRepository<Category> CategoryRepository { get; }
+
+        public IRepository<Subcategory> SubcategoryRepository => _subcategoryRepository;
 
         public void Dispose()
         {

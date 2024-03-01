@@ -14,9 +14,9 @@ namespace CharityApp.Web.Service.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class OrganizationsController : Controller
+    public class OrganizationsController : CharityAppBaseController
     {
-        private ICharityService _charityService;
+        private readonly ICharityService _charityService;
 
 
         #region ctor
@@ -29,9 +29,9 @@ namespace CharityApp.Web.Service.Controllers
 
         #region HttpGet
         //[HttpGet("Get")]
-        //public async Task<IEnumerable<Organization>> GetAll()
+        //public async Task<IEnumerable<Organization>> GetAllAsync()
         //{
-        //    return await _charityService.GetAll();
+        //    return await _charityService.GetAllAsync();
 
         //}
 

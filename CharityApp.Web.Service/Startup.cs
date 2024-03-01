@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -19,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using AspNetCore.RouteAnalyzer;
+using CharityApp.Core.Domain;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http;
 
@@ -26,7 +28,7 @@ namespace CharityApp.Web.Service
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -43,18 +45,13 @@ namespace CharityApp.Web.Service
         // called by the runtime before the Configure method, below.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            // Add services to the collection.
-
-
-            //services.AddMvc();
-
             services
-                //.AddEntityFrameworkNpgsql()
                 .AddDbContext<DatabaseContext>(options => 
                         options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddRouteAnalyzer();
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options => {options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;});
          
     
 
@@ -82,7 +79,9 @@ namespace CharityApp.Web.Service
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
             builder.RegisterType<DatabaseContext>().As<DbContext>().InstancePerLifetimeScope();
            
-            builder.RegisterType<CharityRepository>().As<ICharityRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<OrganizationRepository>().As<IOrganizationRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<CategoryRepository>().As<ICategoryRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<SubcategoryRepository>().As<ISubcategoryRepository>().InstancePerLifetimeScope();
 
             builder.RegisterType<CharityService>().As<ICharityService>().InstancePerLifetimeScope();
             

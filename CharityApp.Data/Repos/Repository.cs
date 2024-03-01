@@ -9,21 +9,14 @@ using System.Threading.Tasks;
 
 namespace CharityApp.Data.Repos
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity>(DbContext db) : IRepository<TEntity> where TEntity : class
     {
-        protected readonly DbContext db;
-
-        public Repository(DbContext _db)
+        public IQueryable<TEntity> GetAll()
         {
-            db = _db;
+            return db.Set<TEntity>().AsQueryable();
         }
 
-        public async Task<IEnumerable<TEntity>> GetAll()
-        {
-            return await db.Set<TEntity>().ToListAsync();
-        }
-
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return db.Set<TEntity>().Where(predicate);
         }
@@ -55,8 +48,8 @@ namespace CharityApp.Data.Repos
 
         public void Remove(object Id)
         {
-            TEntity entity = db.Set<TEntity>().Find(Id);
-            this.Remove(entity);
+            var entity = db.Set<TEntity>().Find(Id);
+            Remove(entity);
         }
 
         public void Update(TEntity entity)

@@ -15,6 +15,8 @@ Focus:
 
 2. Unit of Work. 
 	All actions performed on DB must be grouped as one. 
+		Doing all work all as one or not at all. 
+		Allow for mocking.
 
 [WIP]
 3. SOLID Principles. 
