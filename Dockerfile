@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS base
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS base
 
 ENV ASPNETCORE_URLS http://+:5000
 
