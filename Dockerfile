@@ -30,4 +30,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
 
-ENTRYPOINT ["dotnet", "CharityApp.Web.Service.dll"]
+#ENTRYPOINT ["dotnet", "CharityApp.Web.Service.dll"]

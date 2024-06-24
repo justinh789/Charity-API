@@ -34,7 +34,7 @@ namespace CharityApp.Web.Service
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
-            this.Configuration = builder.Build();
+            Configuration = builder.Build();
         }
 
         public IContainer ApplicationContainer { get; private set; }
@@ -52,8 +52,8 @@ namespace CharityApp.Web.Service
             services.AddRouteAnalyzer();
             services.AddControllers()
                 .AddJsonOptions(options => {options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;});
-         
-    
+
+            // services.AddControllers(c => c.EnableEndpointRouting = false);
 
             services.AddSwaggerGen(c =>
             {
@@ -84,11 +84,10 @@ namespace CharityApp.Web.Service
             builder.RegisterType<SubcategoryRepository>().As<ISubcategoryRepository>().InstancePerLifetimeScope();
 
             builder.RegisterType<CharityService>().As<ICharityService>().InstancePerLifetimeScope();
-            
-            this.ApplicationContainer = builder.Build();
+            ApplicationContainer = builder.Build();
 
             // Create the IServiceProvider based on the container.
-            return new AutofacServiceProvider(this.ApplicationContainer);
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // Configure is where you add middleware. This is called after
@@ -100,10 +99,8 @@ namespace CharityApp.Web.Service
           IWebHostEnvironment webHostEnvironment)
         {
             
-            //loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
-            //loggerFactory.AddDebug();
-
             app.UseRouting();
+           // app.UseCors("AllowAll"); // With endpoint routing, the CORS middleware must be configured to execute between the calls to UseRouting and UseEndpoints.
             app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
@@ -112,6 +109,7 @@ namespace CharityApp.Web.Service
                     name: "default",
                     pattern: "{controller=Organization}/{action=Get}/{id?}");
             });
+            
 
             app.UseSwagger(c =>
             {
@@ -122,6 +120,8 @@ namespace CharityApp.Web.Service
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Charity API PoC V1");
             });
+
+            // app.UseMvc();
 
             // As of Autofac.Extensions.DependencyInjection 4.3.0 the AutofacDependencyResolver
             // implements IDisposable and will be disposed - along with the application container -

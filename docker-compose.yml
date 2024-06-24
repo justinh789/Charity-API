@@ -1,0 +1,28 @@
+version: "3.1"
+
+services:
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - 3000:80 
+    environment:
+      PGADMIN_DEFAULT_EMAIL: justin.halse@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: P@ssw0rd1234%
+      #PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: True
+      #PGADMIN_CONFIG_LOGIN_BANNER: test
+      PGADMIN_CONFIG_CONSOLE_LOG_LEVEL: 10
+
+  db:
+    image: postgis/postgis:15-3.4-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: P@ssw0rd1234%
+
+  api:
+    build: .
+    ports: 
+      - "5000:5000"

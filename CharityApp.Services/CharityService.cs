@@ -22,7 +22,8 @@ namespace CharityApp.Services
 
         public IEnumerable<Category> GetCategories()
         {
-            return _unitOfWork.CategoryRepository.GetAll().Include(cat => cat.Subcategories);
+            return _unitOfWork.CategoryRepository.GetAll()
+                .Include(cat => cat.Subcategories);
         }
 
         public IEnumerable<Subcategory> GetSubcategories(int categoryId)

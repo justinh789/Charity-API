@@ -8,9 +8,11 @@ using System.Linq;
 using CharityApp.Core.Domain;
 using CharityApp.Services.Interfaces;
 using CharityApp.Services;
+using Microsoft.AspNetCore.Cors;
 
 namespace CharityApp.Web.Service.Controllers
 {
+    /*[EnableCors("MyPolicy")]*/
     [Route("api/Categories")]
     [ApiController]
     public class CategoryController : CharityAppBaseController

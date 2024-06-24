@@ -41,24 +41,22 @@ namespace CharityApp.Data.UnitOfWork
             modelBuilder.Entity<Organization>().Property(org => org.UpdatedOnUtc).HasColumnName("updated_on_utc");
             modelBuilder.Entity<Organization>().Property(org => org.TypeOfOrganization).HasColumnName("type_of_organization");
 
-            modelBuilder.Entity<Category>().ToTable("categories", "charity").HasKey(cat => cat.Id);
+            modelBuilder.Entity<Category>().ToTable("categories", "charity").HasKey(cat => cat.CategoryId);
             modelBuilder.Entity<Category>()
                 .HasMany(cat => cat.Subcategories)
                 .WithOne(sub => sub.Category)
                 .HasForeignKey(sub => sub.CategoryId)
                 .IsRequired();
-            modelBuilder.Entity<Category>().Property(cat => cat.Id).HasColumnName("id");
+            modelBuilder.Entity<Category>().Property(cat => cat.CategoryId).HasColumnName("category_id");
             modelBuilder.Entity<Category>().Property(cat => cat.Description).HasColumnName("description");
             modelBuilder.Entity<Category>().Property(cat => cat.Name).HasColumnName("name");
+            modelBuilder.Entity<Category>().Property(cat => cat.MobileIconName).HasColumnName("mobile_icon_name");
 
-            modelBuilder.Entity<Subcategory>().ToTable("subcategories", "charity").HasKey(sub => sub.Id);
+            modelBuilder.Entity<Subcategory>().ToTable("subcategories", "charity").HasKey(sub => sub.SubCategoryId);
             modelBuilder.Entity<Subcategory>().Property(sub => sub.CategoryId).HasColumnName("category_id");
-            modelBuilder.Entity<Subcategory>().Property(sub => sub.Id).HasColumnName("id");
+            modelBuilder.Entity<Subcategory>().Property(sub => sub.SubCategoryId).HasColumnName("subcategory_id");
             modelBuilder.Entity<Subcategory>().Property(sub => sub.Description).HasColumnName("description");
             modelBuilder.Entity<Subcategory>().Property(sub => sub.Name).HasColumnName("name");
-
-
-
 
         }
 
