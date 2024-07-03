@@ -48,7 +48,7 @@ namespace CharityApp.Web.Service.Controllers
         #endregion
 
         #region HttpDelete
-        [HttpDelete("Delete/{id}")]
+        [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
             _charityService.SoftDelete(id);
