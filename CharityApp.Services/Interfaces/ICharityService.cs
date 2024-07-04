@@ -16,5 +16,7 @@ namespace CharityApp.Services.Interfaces
         IEnumerable<Subcategory> GetSubcategories(int categoryId);
         void SoftDelete(int id);
 
+        IEnumerable<Organization> Search(string input);
+
     }
 }

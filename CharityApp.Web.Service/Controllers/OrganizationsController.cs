@@ -14,31 +14,21 @@ namespace CharityApp.Web.Service.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class OrganizationsController : CharityAppBaseController
+    public class OrganizationsController(ICharityService charityService) : CharityAppBaseController
     {
-        private readonly ICharityService _charityService;
-
-
-        #region ctor
-        public OrganizationsController(ICharityService charityService)
-        {
-            _charityService = charityService;
-        }
-        #endregion
-
-
         #region HttpGet
-        //[HttpGet("Get")]
-        //public async Task<IEnumerable<Organization>> GetAllAsync()
-        //{
-        //    return await _charityService.GetAllAsync();
 
-        //}
+
+        [HttpPost("{search}")]
+        public async Task<IEnumerable<Organization>> Search(string search)
+        {
+            return await Task.FromResult(charityService.Search(search));
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Organization>> Get(Guid id)
         {
-            var charity = await Task.FromResult(_charityService.GetById(id));
+            var charity = await Task.FromResult(charityService.GetById(id));
 
             if (charity == null)
                 return NotFound();
@@ -51,7 +41,7 @@ namespace CharityApp.Web.Service.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            _charityService.SoftDelete(id);
+            charityService.SoftDelete(id);
 
 
             return Ok();
