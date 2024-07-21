@@ -58,8 +58,11 @@ namespace CharityApp.Services
                 //.Find(q =>  q.NpoName == input || q.Description == input || q.Objective == input || q.Theme == input )
                 //.Where(q => q.Active == true);
                 .Find(q => q.Active == true)
-                .Where(o => o.NpoName.Contains(input) || o.Description.Contains(input) ||
-                            o.Description.Contains(input) || o.Objective == input || o.Theme == input)
+                .Where(o => o.NpoName.Contains(input) || 
+                            o.Description.Contains(input) ||
+                            o.Theme.Contains(input) ||
+                            string.Equals(o.Objective, input, StringComparison.InvariantCultureIgnoreCase) || 
+                            string.Equals(o.Theme, input, StringComparison.InvariantCultureIgnoreCase))
                 .Take(10);
 
             return organizations;

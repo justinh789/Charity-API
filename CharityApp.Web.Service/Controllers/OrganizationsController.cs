@@ -18,13 +18,6 @@ namespace CharityApp.Web.Service.Controllers
     {
         #region HttpGet
 
-
-        [HttpPost("{search}")]
-        public async Task<IEnumerable<Organization>> Search(string search)
-        {
-            return await Task.FromResult(charityService.Search(search));
-        }
-
         [HttpGet("{id}")]
         public async Task<ActionResult<Organization>> Get(Guid id)
         {
@@ -55,6 +48,12 @@ namespace CharityApp.Web.Service.Controllers
         public void Post([FromBody]string value)
         {
 
+        }
+
+        [HttpPost("{search}")]
+        public async Task<IEnumerable<Organization>> Search(string search)
+        {
+            return await Task.FromResult(charityService.Search(search));
         }
         #endregion
 
