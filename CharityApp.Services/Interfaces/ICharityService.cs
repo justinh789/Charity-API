@@ -9,7 +9,7 @@ namespace CharityApp.Services.Interfaces
 {
     public interface ICharityService
     {
-        IEnumerable<Organization> GetAllAsync();
+        IEnumerable<Organization>GetAllAsync();
         
         Organization GetById(Guid id);
         IEnumerable<Category> GetCategories();

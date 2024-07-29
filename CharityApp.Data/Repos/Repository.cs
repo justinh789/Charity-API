@@ -11,12 +11,12 @@ namespace CharityApp.Data.Repos
 {
     public class Repository<TEntity>(DbContext db) : IRepository<TEntity> where TEntity : class
     {
-        public IQueryable<TEntity> GetAll()
+        public virtual IEnumerable<TEntity> GetAll()
         {
             return db.Set<TEntity>().AsQueryable();
         }
 
-        public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return db.Set<TEntity>().Where(predicate);
         }

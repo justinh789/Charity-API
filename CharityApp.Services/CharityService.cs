@@ -2,6 +2,7 @@
 using CharityApp.Data.UnitOfWork;
 using CharityApp.Services.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace CharityApp.Services
     {
         public IEnumerable<Category> GetCategories()
         {
-            return unitOfWork.CategoryRepository.GetAll()
+            return unitOfWork.CategoryRepository.GetAll().AsQueryable()
                 .Include(cat => cat.Subcategories);
         }
 
@@ -52,17 +53,26 @@ namespace CharityApp.Services
 
         public IEnumerable<Organization> Search(string input)
         {
+
+            if (input == null)
+            {
+                return new List<Organization>
+                {
+                    Capacity = 0
+                };
+            }
+                
+
             // How will user find (11th) result if scrolling? might see huge list and refine search. might have valid 50+ results. 
             // might need to incorporate location / ordering & searching
             var organizations = unitOfWork.OrganizationRepository
-                //.Find(q =>  q.NpoName == input || q.Description == input || q.Objective == input || q.Theme == input )
-                //.Where(q => q.Active == true);
-                .Find(q => q.Active == true)
-                .Where(o => o.NpoName.Contains(input) || 
+                .Find(o => o.Active == true 
+                           && 
+                           (o.NpoName.Contains(input) ||
                             o.Description.Contains(input) ||
                             o.Theme.Contains(input) ||
-                            string.Equals(o.Objective, input, StringComparison.InvariantCultureIgnoreCase) || 
-                            string.Equals(o.Theme, input, StringComparison.InvariantCultureIgnoreCase))
+                            o.Objective.Contains(input)
+                            ))
                 .Take(10);
 
             return organizations;

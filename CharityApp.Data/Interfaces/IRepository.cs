@@ -9,8 +9,8 @@ namespace CharityApp.Data.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        IQueryable<TEntity> GetAll();
-        IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> GetAll();
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
         TEntity Get(object id);
 
         void Add(TEntity entity);
