@@ -33,6 +33,7 @@ namespace CharityApp.Web.Service
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -47,7 +48,7 @@ namespace CharityApp.Web.Service
         {
             services
                 .AddDbContext<DatabaseContext>(options => 
-                        options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddRouteAnalyzer();
             services.AddControllers()
