@@ -10,7 +10,7 @@ namespace CharityApp.Core
     public class Organization
     {
         
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         
         public string NpoName { get; set; }
@@ -44,11 +44,13 @@ namespace CharityApp.Core
         
         public DateTime? DueDate { get; set; }
         
-        public bool Active { get; set; }
+        public bool? Active { get; set; }
         
         public DateTime CreatedOnUtc { get; set; }
         
         public DateTime? UpdatedOnUtc { get; set; }
+
+        public bool IsDeleted { get; set; }
 
     }
 

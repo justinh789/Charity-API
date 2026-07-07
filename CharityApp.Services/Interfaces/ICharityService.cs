@@ -10,7 +10,6 @@ namespace CharityApp.Services.Interfaces
     public interface ICharityService
     {
         IEnumerable<Organization>GetAllAsync();
-        
         Organization GetById(Guid id);
         IEnumerable<Category> GetCategories();
         IEnumerable<Subcategory> GetSubcategories(int categoryId);
